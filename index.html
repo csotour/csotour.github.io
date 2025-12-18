@@ -1,163 +1,217 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bobby Wang | 个人主页</title>
+    <title>Bobby Wang | AI & QA</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+    
     <style>
         :root {
-            --primary-color: #ffffff;
-            --text-color: #2c3e50;
-            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --bg-color: #f2f2f7; /* Apple style gray background */
+            --card-bg: #ffffff;
+            --text-main: #1d1d1f;
+            --text-sub: #86868b;
+            --accent-blue: #0071e3;
+            --grid-gap: 24px;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            height: 100vh;
+            /* Apple System Fonts */
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             display: flex;
             justify-content: center;
             align-items: center;
-            background: var(--bg-gradient);
-            overflow: hidden;
-            position: relative;
+            min-height: 100vh;
+            padding: 20px;
         }
 
-        /* 背景动态圆球装饰 */
-        .circle {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: 0;
-            animation: float 10s infinite ease-in-out;
-        }
-        .c1 { width: 300px; height: 300px; background: #ff9a9e; top: -50px; left: -50px; }
-        .c2 { width: 400px; height: 400px; background: #a18cd1; bottom: -100px; right: -100px; animation-delay: -5s; }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(30px); }
+        /* Layout: Bento Grid */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto auto;
+            gap: var(--grid-gap);
+            max-width: 850px;
+            width: 100%;
         }
 
-        /* 主卡片容器 (毛玻璃效果) */
         .card {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 20px;
-            padding: 3rem;
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            z-index: 1;
-            color: var(--primary-color);
-            transition: transform 0.3s ease;
+            background: var(--card-bg);
+            border-radius: 28px;
+            padding: 30px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
         }
 
-        /* 头像区域 */
-        .avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 4px solid rgba(255,255,255,0.5);
-            margin: 0 auto 1.5rem;
-            overflow: hidden;
-            background-color: #fff; /* 这里的图片可以换成你自己的 */
-            background-image: url('https://github.com/csotour.png'); 
-            background-size: cover;
-            background-position: center;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .tagline {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 2rem;
-            font-weight: 300;
-            line-height: 1.6;
-        }
-
-        /* 社交链接按钮 */
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-        }
-
-        .social-btn {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            display: flex;
+        /* === 1. Profile Card === */
+        .profile-card {
+            grid-column: span 2;
+            grid-row: span 2;
             justify-content: center;
             align-items: center;
-            color: white;
-            text-decoration: none;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            padding: 40px;
+            min-height: 400px;
         }
 
-        .social-btn:hover {
-            background: white;
-            color: #764ba2;
-            transform: scale(1.1);
+        .avatar {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            margin-bottom: 24px;
+            object-fit: cover;
+            border: 4px solid #fff;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
         }
 
-        .footer {
-            margin-top: 2rem;
-            font-size: 0.8rem;
-            opacity: 0.7;
+        .name { font-size: 2.2rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; }
+        
+        .role { 
+            color: var(--text-sub); 
+            font-size: 1.1rem; 
+            margin-bottom: 24px; 
+            background: #f5f5f7;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        /* Typewriter Container */
+        .quote-box {
+            color: #666; 
+            margin-bottom: 30px; 
+            line-height: 1.6; 
+            max-width: 85%;
+            min-height: 2.5em; /* Prevent layout shift */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .typed-cursor { color: var(--accent-blue); }
+        
+        .buttons {
+            display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; width: 100%;
+        }
+
+        .btn {
+            padding: 14px 28px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1rem; transition: all 0.2s; display: flex; align-items: center; gap: 10px;
+        }
+        .btn.primary { background: var(--accent-blue); color: #fff; box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3); }
+        .btn.primary:hover { background: #0062c4; }
+        .btn.secondary { background: #f5f5f7; color: var(--text-main); }
+        .btn.secondary:hover { background: #e8e8ed; }
+
+        /* === 2. Clock Card === */
+        .clock-card {
+            grid-column: span 1; background: #1d1d1f; color: #fff; justify-content: center; align-items: center; min-height: 180px;
+        }
+        .time { font-size: 3.5rem; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -2px; }
+        .date { font-size: 1rem; opacity: 0.7; margin-top: 5px; font-weight: 500; }
+
+        /* === 3. Skills Card === */
+        .skills-card { grid-column: span 1; justify-content: center; }
+        .card-label { font-size: 0.85rem; color: var(--text-sub); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; font-weight: 600; }
+        .skill-icons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .skill-item { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text-main); font-weight: 500; }
+        .skill-item i { font-size: 1.8rem; color: var(--text-main); transition: color 0.3s; }
+        
+        /* Icon Hover Colors */
+        .skill-item:hover i.fa-python { color: #3776AB; }
+        .skill-item:hover i.fa-bug { color: #E34F26; }
+        .skill-item:hover i.fa-robot { color: #00C853; }
+        .skill-item:hover i.fa-terminal { color: #000; }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .bento-grid { grid-template-columns: 1fr; gap: 20px; }
+            .profile-card, .clock-card, .skills-card { grid-column: span 1; grid-row: auto; }
+            .profile-card { padding: 30px 20px; min-height: auto; }
+            .buttons { flex-direction: column; width: 100%; }
+            .btn { width: 100%; justify-content: center; }
+            .clock-card { min-height: 150px; }
+            .skills-card { padding: 25px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="circle c1"></div>
-    <div class="circle c2"></div>
-
-    <div class="card">
-        <div class="avatar"></div>
-        <h1>Bobby Wang</h1>
-        <p class="tagline">
-            “站在巨人的肩膀上，<br>我们也要成为巨人的一部分。”
-        </p>
+    <div class="bento-grid">
         
-        <div class="social-links">
-            <a href="https://github.com/csotour" target="_blank" class="social-btn" title="GitHub">
-                <i class="fab fa-github"></i>
-            </a>
-            <a href="#" class="social-btn" title="Blog">
-                <i class="fas fa-pen-nib"></i>
-            </a>
-            <a href="mailto:your_email@example.com" class="social-btn" title="Email">
-                <i class="fas fa-envelope"></i>
-            </a>
+        <div class="card profile-card">
+            <img src="https://github.com/csotour.png" alt="Bobby Wang" class="avatar">
+            <h1 class="name">Bobby Wang</h1>
+            <div class="role">Software QA & AI Coding</div>
+            
+            <div class="quote-box">
+                “<span id="typed-quote"></span>”
+            </div>
+
+            <div class="buttons">
+                <a href="https://www.bobbywang.top/" target="_blank" class="btn primary">
+                    <i class="fa-solid fa-compass"></i> Visit Blog
+                </a>
+                <a href="https://github.com/csotour" target="_blank" class="btn secondary">
+                    <i class="fa-brands fa-github"></i> GitHub
+                </a>
+            </div>
         </div>
 
-        <div class="footer">
-            © 2026 Bobby Wang. All rights reserved.
+        <div class="card clock-card">
+            <div class="time" id="clock">12:00</div>
+            <div class="date" id="date">Loading...</div>
         </div>
+
+        <div class="card skills-card">
+            <div class="card-label">Tech Stack</div>
+            <div class="skill-icons">
+                <div class="skill-item"><i class="fa-brands fa-python"></i><span>Python</span></div>
+                <div class="skill-item"><i class="fa-solid fa-bug"></i><span>Testing</span></div>
+                <div class="skill-item"><i class="fa-solid fa-robot"></i><span>AI Dev</span></div>
+                <div class="skill-item"><i class="fa-solid fa-terminal"></i><span>Shell</span></div>
+            </div>
+        </div>
+
     </div>
+
+    <script>
+        // === Clock Logic ===
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}`;
+            // English date format
+            const options = { month: 'short', day: 'numeric', weekday: 'short' };
+            document.getElementById('date').textContent = now.toLocaleDateString('en-US', options);
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // === Typewriter Logic ===
+        var typed = new Typed('#typed-quote', {
+            strings: ["站在巨人的肩膀上，我们也要成为巨人的一部分。"], // Keeping this in Chinese
+            typeSpeed: 70,
+            startDelay: 500,
+            loop: false,
+            showCursor: true,
+            cursorChar: '|',
+        });
+    </script>
 
 </body>
 </html>
