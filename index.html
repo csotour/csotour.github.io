@@ -1,215 +1,298 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bobby Wang | AI & QA</title>
+    <title>Bobby Wang | Portfolio</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
     
     <style>
+        /* === 核心变量 === */
         :root {
-            --bg-color: #f2f2f7; /* Apple style gray background */
+            --bg-color: #e0e0e0;       /* 背景改为纯实色，避免点阵干扰 */
             --card-bg: #ffffff;
-            --text-main: #1d1d1f;
-            --text-sub: #86868b;
-            --accent-blue: #0071e3;
-            --grid-gap: 24px;
+            --border-color: #000000;   /* 纯黑边框 */
+            --accent-green: #4ade80;   /* 亮绿色 */
+            --accent-purple: #a78bfa;  /* 亮紫色 */
+            --accent-yellow: #facc15;  /* 亮黄色 */
+            --shadow-dist: 6px;        /* 阴影距离 */
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            /* Apple System Fonts */
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Courier New', Courier, monospace, sans-serif; /* 极客复古字体 */
             background-color: var(--bg-color);
-            color: var(--text-main);
+            color: var(--border-color);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             padding: 20px;
         }
 
-        /* Layout: Bento Grid */
+        /* === 布局容器 === */
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: auto auto;
-            gap: var(--grid-gap);
-            max-width: 850px;
+            gap: 20px;
+            max-width: 900px;
             width: 100%;
         }
 
+        /* === 卡片通用样式 === */
         .card {
             background: var(--card-bg);
-            border-radius: 28px;
-            padding: 30px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
-            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 4px solid var(--border-color); /* 粗黑边框 */
+            box-shadow: var(--shadow-dist) var(--shadow-dist) 0 var(--border-color); /* 硬阴影 */
+            padding: 25px;
             position: relative;
-            overflow: hidden;
+            transition: all 0.2s ease;
             display: flex;
             flex-direction: column;
         }
 
+        /* 鼠标悬停卡片上浮 */
         .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+            transform: translate(-3px, -3px);
+            box-shadow: 10px 10px 0 var(--border-color);
         }
 
-        /* === 1. Profile Card === */
+        /* === 1. 个人主卡片 (左侧大卡) === */
         .profile-card {
             grid-column: span 2;
             grid-row: span 2;
-            justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 40px;
-            min-height: 400px;
+            justify-content: center;
+            min-height: 420px;
         }
 
         .avatar {
             width: 130px;
             height: 130px;
+            border: 4px solid var(--border-color);
             border-radius: 50%;
-            margin-bottom: 24px;
             object-fit: cover;
-            border: 4px solid #fff;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            background-color: #ddd;
         }
 
-        .name { font-size: 2.2rem; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; }
-        
-        .role { 
-            color: var(--text-sub); 
-            font-size: 1.1rem; 
-            margin-bottom: 24px; 
-            background: #f5f5f7;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-weight: 500;
+        .name {
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 10px;
         }
 
-        /* Typewriter Container */
+        .role-tag {
+            background: var(--border-color);
+            color: #fff;
+            padding: 5px 12px;
+            font-weight: bold;
+            font-size: 1rem;
+            transform: rotate(-2deg); /* 俏皮倾斜 */
+            margin-bottom: 25px;
+            display: inline-block;
+        }
+
         .quote-box {
-            color: #666; 
-            margin-bottom: 30px; 
-            line-height: 1.6; 
-            max-width: 85%;
-            min-height: 2.5em; /* Prevent layout shift */
+            min-height: 3em;
+            margin-bottom: 30px;
+            font-weight: bold;
+            font-style: italic;
+            max-width: 90%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .typed-cursor { color: var(--accent-blue); }
         
+        /* 打字机光标样式 */
+        .typed-cursor {
+            color: var(--accent-purple);
+            font-size: 1.2rem;
+        }
+
+        /* === 按钮样式 === */
         .buttons {
-            display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; width: 100%;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            width: 100%;
         }
 
-        .btn {
-            padding: 14px 28px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1rem; transition: all 0.2s; display: flex; align-items: center; gap: 10px;
+        .neo-btn {
+            text-decoration: none;
+            border: 3px solid var(--border-color);
+            background: #fff;
+            color: #000;
+            padding: 12px 24px;
+            font-weight: 800;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.1s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .btn.primary { background: var(--accent-blue); color: #fff; box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3); }
-        .btn.primary:hover { background: #0062c4; }
-        .btn.secondary { background: #f5f5f7; color: var(--text-main); }
-        .btn.secondary:hover { background: #e8e8ed; }
 
-        /* === 2. Clock Card === */
-        .clock-card {
-            grid-column: span 1; background: #1d1d1f; color: #fff; justify-content: center; align-items: center; min-height: 180px;
+        /* 按钮滑盖特效 */
+        .neo-btn::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--accent-green);
+            z-index: -1;
+            transform: translateX(-100%);
+            transition: transform 0.2s;
         }
-        .time { font-size: 3.5rem; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -2px; }
-        .date { font-size: 1rem; opacity: 0.7; margin-top: 5px; font-weight: 500; }
-
-        /* === 3. Skills Card === */
-        .skills-card { grid-column: span 1; justify-content: center; }
-        .card-label { font-size: 0.85rem; color: var(--text-sub); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; font-weight: 600; }
-        .skill-icons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        .skill-item { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text-main); font-weight: 500; }
-        .skill-item i { font-size: 1.8rem; color: var(--text-main); transition: color 0.3s; }
         
-        /* Icon Hover Colors */
-        .skill-item:hover i.fa-python { color: #3776AB; }
-        .skill-item:hover i.fa-bug { color: #E34F26; }
-        .skill-item:hover i.fa-robot { color: #00C853; }
-        .skill-item:hover i.fa-terminal { color: #000; }
+        .neo-btn:hover::after { transform: translateX(0); }
+        .neo-btn:active { transform: scale(0.95); }
+        
+        /* GitHub 按钮用紫色 */
+        .neo-btn.secondary::after { background: var(--accent-purple); }
 
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .bento-grid { grid-template-columns: 1fr; gap: 20px; }
-            .profile-card, .clock-card, .skills-card { grid-column: span 1; grid-row: auto; }
-            .profile-card { padding: 30px 20px; min-height: auto; }
-            .buttons { flex-direction: column; width: 100%; }
-            .btn { width: 100%; justify-content: center; }
-            .clock-card { min-height: 150px; }
-            .skills-card { padding: 25px; }
+        /* === 2. 时钟卡片 (右上) === */
+        .clock-card {
+            grid-column: span 1;
+            background-color: var(--accent-yellow);
+            justify-content: center;
+            align-items: center;
         }
-    </style>
-</head>
+        
+        .clock-time {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+        }
+        .clock-date {
+            font-weight: bold;
+            border-top: 3px solid #000;
+            padding-top: 5px;
+            margin-top: 5px;
+        }
+
+        /* === 3. 技能卡片 (右下) === */
+        .skills-card {
+            grid-column: span 1;
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            border-bottom: 4px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .skill-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .skill-box {
+            border: 3px solid #000;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .skill-box i { font-size: 1.4rem; }
+
+        .skill-box:hover {
+            background: #000;
+            color: #fff;
+            box-shadow: 4px 4px 0 var(--accent-green);
+            transform: translate(-2px, -2px);
+        }
+
+        /* === 移动端适配 === */
+        @media (max-width: 768px) {
+            .bento-grid { grid-template-columns: 1fr; }
+            .profile-card, .clock-card, .skills-card { grid-column: span 1; grid-row: auto; }
+            .profile-card { min-height: auto; padding: 30px; }
+            .buttons { flex-direction: column; }
+            .neo-btn { justify-content: center; }
+        }
+    </style> </head>
 <body>
 
     <div class="bento-grid">
         
         <div class="card profile-card">
-            <img src="https://github.com/csotour.png" alt="Bobby Wang" class="avatar">
+            <img src="https://github.com/csotour.png" alt="Avatar" class="avatar">
+            
             <h1 class="name">Bobby Wang</h1>
-            <div class="role">Software QA & AI Coding</div>
+            <div class="role-tag">SOFTWARE QA & AI DEV</div>
             
             <div class="quote-box">
                 “<span id="typed-quote"></span>”
             </div>
 
             <div class="buttons">
-                <a href="https://www.bobbywang.top/" target="_blank" class="btn primary">
+                <a href="https://www.bobbywang.top/" target="_blank" class="neo-btn">
                     <i class="fa-solid fa-compass"></i> Visit Blog
                 </a>
-                <a href="https://github.com/csotour" target="_blank" class="btn secondary">
+                
+                <a href="https://github.com/csotour" target="_blank" class="neo-btn secondary">
                     <i class="fa-brands fa-github"></i> GitHub
                 </a>
             </div>
         </div>
 
         <div class="card clock-card">
-            <div class="time" id="clock">12:00</div>
-            <div class="date" id="date">Loading...</div>
+            <div class="clock-time" id="clock">00:00</div>
+            <div class="clock-date" id="date">Loading...</div>
         </div>
 
         <div class="card skills-card">
-            <div class="card-label">Tech Stack</div>
-            <div class="skill-icons">
-                <div class="skill-item"><i class="fa-brands fa-python"></i><span>Python</span></div>
-                <div class="skill-item"><i class="fa-solid fa-bug"></i><span>Testing</span></div>
-                <div class="skill-item"><i class="fa-solid fa-robot"></i><span>AI Dev</span></div>
-                <div class="skill-item"><i class="fa-solid fa-terminal"></i><span>Shell</span></div>
+            <div class="card-title">Tech Stack</div>
+            <div class="skill-grid">
+                <div class="skill-box"><i class="fa-brands fa-python"></i> Python</div>
+                <div class="skill-box"><i class="fa-solid fa-bug"></i> QA</div>
+                <div class="skill-box"><i class="fa-solid fa-robot"></i> AI</div>
+                <div class="skill-box"><i class="fa-solid fa-terminal"></i> Shell</div>
             </div>
         </div>
 
     </div>
 
     <script>
-        // === Clock Logic ===
+        // === 时钟逻辑 ===
         function updateClock() {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             document.getElementById('clock').textContent = `${hours}:${minutes}`;
-            // English date format
+            
             const options = { month: 'short', day: 'numeric', weekday: 'short' };
-            document.getElementById('date').textContent = now.toLocaleDateString('en-US', options);
+            document.getElementById('date').textContent = now.toLocaleDateString('en-US', options).toUpperCase();
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // === Typewriter Logic ===
+        // === 打字机逻辑 ===
         var typed = new Typed('#typed-quote', {
-            strings: ["站在巨人的肩膀上，我们也要成为巨人的一部分。"], // Keeping this in Chinese
-            typeSpeed: 70,
-            startDelay: 500,
+            strings: ["站在巨人的肩膀上，我们也要成为巨人的一部分。"],
+            typeSpeed: 60,
+            startDelay: 300,
             loop: false,
             showCursor: true,
-            cursorChar: '|',
+            cursorChar: '_',
         });
     </script>
 
